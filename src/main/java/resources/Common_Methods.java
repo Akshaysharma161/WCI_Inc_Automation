@@ -11,7 +11,7 @@ public class Common_Methods {
 	public WebDriver driver;
 
 //	private By btnLogin = By.xpath("//span[text()='Log in']");
-	private By btnHome = By.xpath("//*[contains(text(),'Home')]");
+	private By btnHome = By.xpath("//*[contains(text(),'Home')]"); 
 	
 	public Common_Methods(WebDriver driver) {
 		this.driver = driver;

@@ -14,7 +14,7 @@ public class ConfigDataProvider {
 		FileInputStream file = new FileInputStream(src);
 		Pro = new Properties();
 		Pro.load(file);
-	}
+	} 
 	public String getBrowser() 
 	{
 		return Pro.getProperty("Browser");

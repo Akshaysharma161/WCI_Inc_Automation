@@ -47,7 +47,7 @@ public class PublicHomePage extends base {
 	public void Login_FSA_California() throws InterruptedException {
 		driver.get(config.getBaseUrl());
 		driver.manage().window().maximize();
-		Thread.sleep(5000);
+		Thread.sleep(5000); 
 		POMPublicHomePage login = new POMPublicHomePage(driver);
 		login.FSALoginCa();
 		Thread.sleep(2000);

@@ -1,5 +1,5 @@
 package pageObjects;
 
-public class POMEventMonitoring {
+public class POMEventMonitoring { 
 
 }

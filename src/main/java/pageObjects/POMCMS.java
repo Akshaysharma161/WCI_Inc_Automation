@@ -1,5 +1,5 @@
 package pageObjects;
 
-public class POMCMS {
+public class POMCMS { 
 
 }

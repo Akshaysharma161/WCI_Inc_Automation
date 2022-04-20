@@ -1,5 +1,5 @@
 package pageObjects;
 
-public class POMAdminstration {
+public class POMAdminstration { 
 
 }

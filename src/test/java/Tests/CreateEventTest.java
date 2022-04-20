@@ -1,7 +1,10 @@
 package Tests;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Random;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -38,5 +41,12 @@ public class CreateEventTest extends base {
 		CreateEvent abc = new CreateEvent(driver);
 		abc.createEvent();
 		ObjectRepo.test.log(Status.PASS, "Event Created Successfully");
+		abc.CaliforniaJuridictionApprovalForEventCreation();
+		Thread.sleep(2000);
+		
 	}
+
+	
+		
+	
 }

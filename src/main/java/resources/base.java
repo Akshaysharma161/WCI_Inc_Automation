@@ -22,7 +22,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @Listeners(resources.listeners.class)
 public class base {
 
-	public static WebDriver driver;
+	public static WebDriver driver; 
 	private Properties prop;
 	public static ConfigDataProvider config;
 

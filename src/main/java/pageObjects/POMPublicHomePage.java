@@ -17,6 +17,7 @@ import resources.base;
 public class POMPublicHomePage extends base {
 
 	public WebDriver driver;
+	
 
 	private By btnLogin = By.xpath("//span[text()='Log in']");
 	private By username = By.xpath("//input[@id='enter_email']");
@@ -30,6 +31,7 @@ public class POMPublicHomePage extends base {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
+	
 
 	public void sponsorLoginCa() throws InterruptedException {
 		driver.findElement(btnLogin).click();

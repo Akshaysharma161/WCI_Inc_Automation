@@ -2,16 +2,21 @@ package pageObjects;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import resources.base;
 
 public class CreateEvent extends base {
+	public String randomString;
 
 	public static Actions action;
 	private By btnAdminstration = By.xpath("//span[text()='Administration']");
@@ -53,21 +58,41 @@ public class CreateEvent extends base {
 	private By dropdownAlgorithm = By.xpath("//select[@name='algorithm']");
 	private By btnSave = By.xpath("//span[text()='SAVE']");
 
+	// private By btnAlert = By.xpath("(//button[@type='button'])[16]");
+	private By eventDetailsBtn = By.xpath("//*[@id='event-list']/table/tbody/tr[1]/td[9]");
+	private By btnApproveCal = By.xpath("//button[@aria-label='approval1Status']");
+	private By btnApprovalQue = By.xpath("//button[@aria-label='approval2Status']");
+	private By btnSubmit1 = By.xpath("(//span[text()='SUBMIT'])[1]");
+	private By btnSubmit2 = By.xpath("(//span[text()='SUBMIT'])[2]");
+	private By btnAlert2 = By.xpath("(//button[@type='button'])[15]");
+	private By btnProfile = By.xpath("//span[contains(text(),'Welcome, ')]");
+	private By btnLogout = By.xpath("//li[text()='Logout']");
+
 	public CreateEvent(WebDriver driver) {
 		CreateEvent.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
+	
+	public void generateString() {
+	    int length = 12;
+	    boolean useLetters = true;
+	    boolean useNumbers = true;
+	    String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
+	    randomString =("Event_"+generatedString);
+	}
+
 
 	public void createEvent() throws InterruptedException {
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		clickbtnAdmin();
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		clickbtnEvent();
 		clickbtnCreateEvent();
 
 		// EVENT BASICS
-		gettextBoxEvent();
+		generateString();
+		gettextBoxEvent(); // Event Id
 		selectEventTypeFromDropDown();
 		enterEventName();
 		selectJurisdiction();
@@ -80,6 +105,41 @@ public class CreateEvent extends base {
 		selectProcessingOrder(); // Dates and Times
 		selectDates();
 		selectAlgorithm();
+	}
+
+	public void CaliforniaJuridictionApprovalForEventCreation() throws InterruptedException {
+
+//		WebDriverWait wait = new WebDriverWait(driver, 30);
+//		WebElement element1 = wait.until(ExpectedConditions.elementToBeClickable(btnAlert));
+//		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element1);
+
+//		Thread.sleep(5000);
+//		clickbtnAdmin();
+//		Thread.sleep(3000);
+//		clickbtnEvent();
+		Thread.sleep(5000);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+//		WebElement element3 = wait.until(ExpectedConditions.elementToBeClickable(eventDetailsBtn));
+//		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element3);
+
+		driver.findElement(eventDetailsBtn).click();
+
+//		JavascriptExecutor js =(JavascriptExecutor)driver;
+//		js.executeScript("Window.scrollBy(0,1000)");
+		Thread.sleep(8000);
+//		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnApproveCal));
+//		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+		driver.findElement(btnApproveCal).click();
+		Thread.sleep(2000);
+		driver.findElement(btnSubmit1).click();
+		Thread.sleep(5000);
+//		WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(btnAlert2));
+//		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element2);
+//		// driver.findElement(btnAlert2).click();
+
+		// logout
+		driver.findElement(btnProfile).click();
+		driver.findElement(btnLogout).click();
 
 	}
 
@@ -108,7 +168,7 @@ public class CreateEvent extends base {
 	}
 
 	public void gettextBoxEvent() {
-		driver.findElement(textBoxEventID).sendKeys("A243");
+		driver.findElement(textBoxEventID).sendKeys(randomString);
 	}
 
 	public void selectEventTypeFromDropDown() {
@@ -118,7 +178,7 @@ public class CreateEvent extends base {
 	}
 
 	public void enterEventName() {
-		driver.findElement(eventName).sendKeys("DemoEvent");
+		driver.findElement(eventName).sendKeys("DemoEt2");
 	}
 
 	public void selectJurisdiction() throws InterruptedException {
@@ -179,29 +239,30 @@ public class CreateEvent extends base {
 
 	public void selectDates() throws InterruptedException {
 		driver.findElement(dateBiddingPeroidOpen).click();
-		driver.findElement(dateBiddingPeroidOpen).sendKeys("18 Apr 2022 06:07");
+		driver.findElement(dateBiddingPeroidOpen).sendKeys("20 Apr 2022 06:40");
 		driver.findElement(dateBiddingPeriodClose).click();
-		driver.findElement(dateBiddingPeriodClose).sendKeys("18 Apr 2022 08:07");
+		driver.findElement(dateBiddingPeriodClose).sendKeys("20 Apr 2022 06:45");
 		driver.findElement(dateEventAppOpen).click();
-		driver.findElement(dateEventAppOpen).sendKeys("18 Apr 2022 06:07");
+		driver.findElement(dateEventAppOpen).sendKeys("20 Apr 2022 06:38");
 		driver.findElement(dateEventAppClose).click();
-		driver.findElement(dateEventAppClose).sendKeys("18 Apr 2022 06:07");
-		driver.findElement(dateBidGuaranteesubDeadline).click();
-		driver.findElement(dateBidGuaranteesubDeadline).sendKeys("18 Apr 2022 06:07");
-
-		WebElement dropdownBidderConfer = driver.findElement(dropdownBidderConfe);
-		Select select1 = new Select(dropdownBidderConfer);
-		select1.selectByVisibleText("All");
-
-		driver.findElement(dateBidderConference).click();
-		driver.findElement(dateBidderConference).sendKeys("21 Apr 2022 06:07");
-
-		driver.findElement(dateBidResultAvail).click();
-		driver.findElement(dateBidResultAvail).sendKeys("18 Apr 2022 06:07");
-		driver.findElement(dateEventClosure).click();
-		driver.findElement(dateEventClosure).sendKeys("19 Apr 2022 06:07");
-		driver.findElement(dateFinantialSettlement).click();
-		driver.findElement(dateFinantialSettlement).sendKeys("20 Apr 2022 06:07");
+		driver.findElement(dateEventAppClose).sendKeys("20 Apr 2022 06:39");
+		// driver.findElement(dateBidGuaranteesubDeadline).click();
+		// driver.findElement(dateBidGuaranteesubDeadline).sendKeys("19 Apr 2022
+		// 06:25");
+//
+//		WebElement dropdownBidderConfer = driver.findElement(dropdownBidderConfe);
+//		Select select1 = new Select(dropdownBidderConfer);
+//		select1.selectByVisibleText("All");
+//
+//		driver.findElement(dateBidderConference).click();
+//		driver.findElement(dateBidderConference).sendKeys("19 Apr 2022 06:19");
+//
+//		driver.findElement(dateBidResultAvail).click();
+//		driver.findElement(dateBidResultAvail).sendKeys("19 Apr 2022 06:40");
+//		driver.findElement(dateEventClosure).click();
+//		driver.findElement(dateEventClosure).sendKeys("19 Apr 2022 06:45");
+//		driver.findElement(dateFinantialSettlement).click();
+//		driver.findElement(dateFinantialSettlement).sendKeys("19 Apr 2022 06:43");
 
 	}
 

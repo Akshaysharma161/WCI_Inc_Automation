@@ -13,7 +13,7 @@ import com.aventstack.extentreports.Status;
 
 public class listeners extends base implements ITestListener {
 	ExtentReports extent = ExtentReporterNG.getReportObject();
-	ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
+	ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>(); 
 
 	public void onTestStart(ITestResult result) {
 		ObjectRepo.test=extent.createTest(result.getTestClass().getName()+"=="+result.getMethod().getMethodName());
